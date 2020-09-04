@@ -8,7 +8,7 @@ router.get('/', (req, res) => {
 router.post('/', (req, res) => {
     items.push(req.body);
 
-    return res.json({
+    return res.status(201).json({
         added: req.body,
     });
 });
@@ -16,16 +16,21 @@ router.post('/', (req, res) => {
 router.get('/:name', (req, res) => {
     const item = items.find((i) => i.name === req.params.name);
 
-    return res.json(item);
+    return res.status(200).json(item);
 });
 
 router.patch('/:name', (req, res) => {
     const item = items.find((i) => i.name === req.params.name);
 
-    item.name = req.body.name;
-    item.price = req.body.price;
+    if (req.body.name) {
+        item.name = req.body.name;
+    }
 
-    return res.json({
+    if (req.body.price) {
+        item.price = req.body.price;
+    }
+
+    return res.status(200).json({
         updated: item,
     });
 });
@@ -33,7 +38,7 @@ router.patch('/:name', (req, res) => {
 router.delete('/:name', (req, res) => {
     items = items.filter((item) => item.name !== req.params.name);
 
-    return res.json({
+    return res.status(200).json({
         message: 'Deleted',
     });
 });

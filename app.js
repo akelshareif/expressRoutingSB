@@ -9,6 +9,4 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use('/items', itemRoutes);
 
-app.listen(3000, () => {
-    console.log('Server started');
-});
+module.exports = app;
